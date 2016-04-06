@@ -1,0 +1,33 @@
+{
+  "name": "mycph",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build && node index.js",
+    "build:clean": "rimraf ./dist/js/*",
+    "build:html": "cp ./src/index.html ./dist/index.html",
+    "build:js": "browserify ./src/index.js -o ./dist/bundle.js",
+    "build": "npm run build:html && npm run build:js",
+    "prebuild": "npm run build:clean"
+  },
+  "browserify-shim": {
+    "L": "global:L"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "rimraf": "^2.5.2"
+  }
+}
