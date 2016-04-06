@@ -1,9 +1,22 @@
 var appSelector = 'mycph';
 var app = document.getElementById(appSelector);
 
-var div = document.createElement("div");
-div.appendChild(document.createTextNode("mycph"));
+// CREATE A HEADING
+var heading = document.createElement("div");
 
-app.appendChild(div);
+// CREATE THE SEARCH FIELD
+var search = document.createElement('input');
+search.type = 'text';
+search.className = 'search'
 
-console.log(L);
+// CREATE THE SUBMIT BUTTON
+var submit = document.createElement('input');
+submit.type = 'button';
+submit.value = 'submit'
+
+// ADD ABOVE ELEMENTS INTO THE HEADING
+heading.appendChild(search);
+heading.appendChild(submit);
+
+// ADD THE HEADING INTO THE APP ELEMENT
+app.appendChild(heading);
