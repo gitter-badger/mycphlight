@@ -36,6 +36,28 @@ form.appendChild(submit);
 app.appendChild(form);
 app.appendChild(content);
 
+var listContainer = document.createElement('div');
+listContainer.style.position = "absolute";
+listContainer.style.left     = "0";
+listContainer.style.width    = "50%";
+listContainer.style.top      = "40px";
+listContainer.style.bottom   = "0px";
+
+var mapContainer = document.createElement('div');
+mapContainer.style.position = "absolute";
+mapContainer.style.right    = "0";
+mapContainer.style.left    = "50%";
+mapContainer.style.top      = "40px";
+mapContainer.style.bottom   = "0px";
+
+app.appendChild(listContainer);
+app.appendChild(mapContainer);
+var map = L.map(mapContainer).setView([51.505, -0.09], 13);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
 // ABOVE THIS LINE, THE LOGIC:
 
 
@@ -53,6 +75,19 @@ function jsonp(url, callback) {
   document.body.appendChild(script);
 }
 
+function addToMap(media) {
+  L.marker([media.location.latitude, media.location.longitude]).addTo(map)
+}
+
+function addToList(media) {
+  var link = document.createElement('a');
+  link.appendChild(document.createTextNode(media.link));
+  link.href = media.link;
+  content.appendChild(link);
+  content.appendChild(document.createElement('br'));
+
+}
+
 function fetchGrams (tag, count, access_parameters) {
 
   var url = 'https://api.instagram.com/v1/tags/' + tag + '/media/recent?callback=?&count=10&access_token=16384709.6ac06b4.49b97800d7fd4ac799a2c889f50f2587';
@@ -61,11 +96,11 @@ function fetchGrams (tag, count, access_parameters) {
     if(response.data.length) {
       content.innerHTML = "";
       for(var i in response.data) {
-        var link = document.createElement('a');
-        link.appendChild(document.createTextNode(response.data[i].link));
-        link.href = response.data[i].link;
-        content.appendChild(link);
-        content.appendChild(document.createElement('br'));
+        if(response.data[i].location !== null) {
+          addToMap(response.data[i]);
+        } else {
+          addToList(response.data[i]);
+        }
       }
     } else {
       content.appendChild(document.createTextNode("no content was found"));
