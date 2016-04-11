@@ -60,14 +60,30 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-var polygon = L.polygon([
-    [55.676021, 12.569036],
-    [55.679000, 12.569900],
-    [55.670000, 12.560000],
-]).addTo(map);
+function mapRegions(data) {
+      L.geoJson(data, {
+
+      }).addTo(map);
+
+}
+
+function getRegions() {
+  var xhttp = new XMLHttpRequest();
+  var url = "/regions.geojson";
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      mapRegions(JSON.parse(xhttp.responseText));
+      //drawRegions(JSON.parse(xhttp.responseText));
+
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+
+getRegions();
 
 // ABOVE THIS LINE, THE LOGIC:
-
 
 // JSONP. See: http://stackoverflow.com/a/22780569/971008
 function jsonp(url, callback) {
@@ -88,12 +104,17 @@ function addToMap(media) {
 }
 
 function addToList(media) {
+
+  var img = document.createElement('img');
+  img.src = media.images.thumbnail.url;
+
   var link = document.createElement('a');
   link.appendChild(document.createTextNode(media.link));
   link.href = media.link;
+
+  content.appendChild(img);
   content.appendChild(link);
   content.appendChild(document.createElement('br'));
-
 }
 
 function fetchGrams (tag, count, access_parameters) {
@@ -113,10 +134,7 @@ function fetchGrams (tag, count, access_parameters) {
     } else {
       content.appendChild(document.createTextNode("no content was found"));
     }
-
-
-  })
-
+  });
 }
 
 function handleFormSubmission(e) {
