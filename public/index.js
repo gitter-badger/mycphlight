@@ -60,6 +60,12 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+var polygon = L.polygon([
+    [55.676021, 12.569036],
+    [55.679000, 12.569900],
+    [55.670000, 12.560000],
+]).addTo(map);
+
 // ABOVE THIS LINE, THE LOGIC:
 
 
