@@ -100,7 +100,16 @@ function jsonp(url, callback) {
 }
 
 function addToMap(media) {
-  L.marker([media.location.latitude, media.location.longitude]).addTo(map)
+
+  var icon = L.icon({
+    iconUrl: media.images.thumbnail.url,
+    iconSize: [70, 70]
+  });
+
+  console.log(media.images);
+
+  L.marker([media.location.latitude, media.location.longitude], {icon:icon}).addTo(map)
+    .bindPopup('<img width="300px" src="'+media.images.standard_resolution.url+'"/>')
 }
 
 function addToList(media) {
