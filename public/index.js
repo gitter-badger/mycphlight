@@ -52,9 +52,11 @@ mapContainer.style.bottom   = "0px";
 
 app.appendChild(listContainer);
 app.appendChild(mapContainer);
-var map = L.map(mapContainer).setView([51.505, -0.09], 13);
+var map = L.map(mapContainer).setView([55.676023,12.569031], 13);
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={access_token}', {
+    id: 'ddamba.ofm04n7i',
+    access_token: 'pk.eyJ1IjoiZGRhbWJhIiwiYSI6Ik9vX1VPdmcifQ.nEbSOXJ-DWVGhiEY771xvg',
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
