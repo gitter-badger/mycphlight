@@ -11,6 +11,13 @@ var ajax = {};
 var form = document.createElement('form');
 form.name = 'tagsearch';
 form.addEventListener('submit', handleFormSubmission);
+form.style.margin = "20px 10px";
+
+var left = document.createElement('div');
+left.style.position = "absolute";
+left.style.width = "400px";
+left.style.top = "0";
+left.style.bottom = "0";
 
 var content = document.createElement('div');
 
@@ -33,21 +40,22 @@ form.appendChild(search);
 form.appendChild(submit);
 
 // ADD THE FORM AND THE CONTENT INTO THE APP ELEMENT
-app.appendChild(form);
+left.appendChild(form);
+app.appendChild(left);
 app.appendChild(content);
 
 var listContainer = document.createElement('div');
 listContainer.style.position = "absolute";
 listContainer.style.left     = "0";
-listContainer.style.width    = "50%";
 listContainer.style.top      = "40px";
-listContainer.style.bottom   = "0px";
+listContainer.style.bottom   = "0";
+listContainer.style.overflow = "auto";
 
 var mapContainer = document.createElement('div');
 mapContainer.style.position = "absolute";
 mapContainer.style.right    = "0";
-mapContainer.style.left    = "50%";
-mapContainer.style.top      = "40px";
+mapContainer.style.left     = "400px";
+mapContainer.style.top      = "0px";
 mapContainer.style.bottom   = "0px";
 
 app.appendChild(listContainer);
@@ -121,9 +129,9 @@ function addToList(media) {
   link.appendChild(document.createTextNode(media.link));
   link.href = media.link;
 
-  content.appendChild(img);
-  content.appendChild(link);
-  content.appendChild(document.createElement('br'));
+  listContainer.appendChild(img);
+  listContainer.appendChild(link);
+  listContainer.appendChild(document.createElement('br'));
 }
 
 function fetchGrams (tag, count, access_parameters) {

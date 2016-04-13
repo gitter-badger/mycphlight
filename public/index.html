@@ -4,10 +4,59 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <title>mycph</title>
   </head>
+
+  <style>
+    header{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:120px;
+    }
+    section {
+      position:absolute;
+      top:120px;
+      left:0; right:0;
+      bottom:20px;
+      overflow:auto;
+    }
+    footer {
+      position:absolute;
+      bottom:0;
+      left:0; right:0;
+      height:20px;
+    }
+
+    .banner {
+      position:absolute;
+      left:400px;
+      right:0;
+      top:0;
+      bottom:0;
+      background-color:#f00;
+      background-image: url('./images/imgpsh_fullsize.jpg')
+    }
+
+    .logo {
+      margin:10px
+    }
+
+  </style>
+
   <body>
 
-    <div id="mycph"></div>
+    <header>
+      <img class="logo" src="./images/logo.jpg" height="120" alt="logo" />
+      <div class="banner"></div>
+    </header>
 
+    <section>
+      <div id="mycph"></div>
+    </section>
+
+    <footer>
+      footer
+    </footer>
     <script src="./index.js"></script>
   </body>
 </html>
