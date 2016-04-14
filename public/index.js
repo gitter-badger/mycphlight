@@ -60,7 +60,7 @@ mapContainer.style.bottom   = "0px";
 
 app.appendChild(listContainer);
 app.appendChild(mapContainer);
-var map = L.map(mapContainer).setView([55.676023,12.569031], 13);
+var map = L.map(mapContainer).setView([55.707,12.529], 15);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={access_token}', {
     id: 'ddamba.ofm04n7i',
