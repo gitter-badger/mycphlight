@@ -51,6 +51,13 @@ listContainer.style.top      = "40px";
 listContainer.style.bottom   = "0";
 listContainer.style.overflow = "auto";
 
+var featureList = document.createElement('div');
+featureList.style.position = "absolute";
+featureList.style.left     = "0";
+featureList.style.top      = "40px";
+featureList.style.bottom   = "0";
+featureList.style.overflow = "auto";
+
 var mapContainer = document.createElement('div');
 mapContainer.style.position = "absolute";
 mapContainer.style.right    = "0";
@@ -59,6 +66,7 @@ mapContainer.style.top      = "0px";
 mapContainer.style.bottom   = "0px";
 
 app.appendChild(listContainer);
+app.appendChild(featureList);
 app.appendChild(mapContainer);
 var map = L.map(mapContainer).setView([55.707,12.529], 15);
 
@@ -69,9 +77,15 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(map);
 
 function mapRegions(data) {
+      console.log("list of features");
       L.geoJson(data, {
         onEachFeature: function (feature, layer) {
-          layer.bindPopup("ok");
+          console.log("feature:", feature);
+          var featureContainer = document.createElement('div');
+
+          featureContainer.appendChild(document.createTextNode(feature.properties.navn));
+          featureList.appendChild(featureContainer);
+          layer.bindPopup(feature.properties.description);
         }
       }).addTo(map);
 
