@@ -70,7 +70,9 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 function mapRegions(data) {
       L.geoJson(data, {
-
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup("ok");
+        }
       }).addTo(map);
 
 }
