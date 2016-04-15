@@ -85,12 +85,36 @@ function mapRegions(data) {
       console.log("feature:", feature);
       var featureContainer = document.createElement('div');
 
-      featureContainer.appendChild(document.createTextNode(feature.properties.navn));
-      featureContainer.id = feature.id;
-      featureContainer.addEventListener('click', function (e) {
+      var label = document.createElement('label');
+
+      var checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = 'true';
+      checkbox.id = 'checkbox.'+feature.id;
+      checkbox.name = feature.id;
+
+      label.htmlFor = 'checkbox.'+feature.id;
+      label.innerHTML = feature.properties.navn;
+
+
+      checkbox.onchange = function () {
+        var featureName = this.id.substring(9);
+        if(this.checked) {
+          geojsonLayer.addLayer(featureMap[featureName]);
+        } else {
+          geojsonLayer.removeLayer(featureMap[featureName]);
+        }
+        
+      };
+
+      featureContainer.appendChild(checkbox);
+      featureContainer.appendChild(label);
+      //featureContainer.appendChild(document.createTextNode(feature.properties.navn));
+      //featureContainer.id = feature.id;
+      /*featureContainer.addEventListener('click', function (e) {
         var layer = featureMap[this.id];
         geojsonLayer.removeLayer(layer);
-      });
+      });*/
       featureMap[feature.id] = layer;
       featureList.appendChild(featureContainer);
       layer.bindPopup(feature.properties.description);
