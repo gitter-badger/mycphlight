@@ -76,19 +76,28 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+var featureMap = {};
 function mapRegions(data) {
-      console.log("list of features");
-      L.geoJson(data, {
-        onEachFeature: function (feature, layer) {
-          console.log("feature:", feature);
-          var featureContainer = document.createElement('div');
+  console.log("list of features");
+  var geojsonLayer = L.geoJson(data, {
+    onEachFeature: function (feature, layer) {
+      console.log("layer", layer);
+      console.log("feature:", feature);
+      var featureContainer = document.createElement('div');
 
-          featureContainer.appendChild(document.createTextNode(feature.properties.navn));
-          featureList.appendChild(featureContainer);
-          layer.bindPopup(feature.properties.description);
-        }
-      }).addTo(map);
+      featureContainer.appendChild(document.createTextNode(feature.properties.navn));
+      featureContainer.id = feature.id;
+      featureContainer.addEventListener('click', function (e) {
+        var layer = featureMap[this.id];
+        geojsonLayer.removeLayer(layer);
+      });
+      featureMap[feature.id] = layer;
+      featureList.appendChild(featureContainer);
+      layer.bindPopup(feature.properties.description);
+    }
+  })
 
+  geojsonLayer.addTo(map);
 }
 
 function getRegions() {
